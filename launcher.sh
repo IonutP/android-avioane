@@ -29,8 +29,8 @@ if [ $? -ne 0 ]; then
     echo "⚠️  uiautomator2 not found!"
     echo ""
     echo "Installing required packages..."
-    # Note: Don't upgrade pip in Termux - it breaks the python-pip package
-    pip install uiautomator2 pillow numpy pytesseract
+    # Use python3 -m pip to avoid pip trying to upgrade itself
+    python3 -m pip install --user uiautomator2 pillow numpy pytesseract
     echo ""
     echo "Initializing uiautomator2 (one time setup)..."
     python3 -m uiautomator2 init

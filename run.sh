@@ -45,7 +45,8 @@ check_packages() {
         echo "   This may take 10-20 minutes..."
         # Ensure python-pip is installed (Termux requirement)
         pkg install -y python-pip 2>/dev/null || true
-        pip install pillow numpy pytesseract uiautomator2
+        # Use python3 -m pip to avoid pip trying to upgrade itself
+        python3 -m pip install --user pillow numpy pytesseract uiautomator2
         
         if [ $? -ne 0 ]; then
             echo -e "${RED}❌ Package installation failed${NC}"

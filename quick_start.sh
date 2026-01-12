@@ -25,8 +25,8 @@ pkg install -y python python-pip
 # Install Python packages
 echo ""
 echo "📚 Installing Python packages..."
-# Note: Don't upgrade pip in Termux - it breaks the python-pip package
-pip install pillow numpy pytesseract uiautomator2
+# Use python3 -m pip to avoid pip trying to upgrade itself
+python3 -m pip install --user pillow numpy pytesseract uiautomator2
 
 # Initialize uiautomator2
 echo ""
