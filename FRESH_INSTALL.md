@@ -159,22 +159,28 @@ python3 -m uiautomator2 init
 
 ### "Package installation failed" or "Failed to build numpy"
 
-**For numpy or pillow build errors:**
+**For numpy or pillow build errors (especially "JPEG headers not found"):**
 
-1. Install all build dependencies manually:
-```bash
-pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng
-```
-
-2. Try installing packages again:
-```bash
-python3 -m pip install --user pillow numpy
-```
-
-3. If that fails, try Termux packages:
+**Best solution - Use Termux pre-built packages (no compilation):**
 ```bash
 pkg install -y python-pillow python-numpy
 ```
+
+**If Termux packages aren't available, install JPEG dev libraries:**
+```bash
+# Install JPEG development libraries (required for Pillow)
+pkg install -y libjpeg-turbo-dev libjpeg-turbo binutils make gcc python-dev zlib libpng
+
+# Set environment variables for JPEG library location
+export JPEG_ROOT=/data/data/com.termux/files/usr
+export CPPFLAGS="-I$JPEG_ROOT/include"
+export LDFLAGS="-L$JPEG_ROOT/lib"
+
+# Then try installing again
+python3 -m pip install --user pillow numpy
+```
+
+**Note:** The updated scripts automatically try Termux packages first to avoid these build issues!
 
 **For other package errors:**
 

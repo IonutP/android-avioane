@@ -47,13 +47,21 @@ check_packages() {
         pkg install -y python-pip 2>/dev/null || true
         
         # Try Termux packages first (pre-built, no compilation needed)
-        echo "   Installing pillow from Termux packages (recommended)..."
-        pkg install -y python-pillow 2>/dev/null || {
-            echo -e "${YELLOW}   ⚠️  Termux pillow package not available, trying pip...${NC}"
-            # Install build dependencies if we need to build from source
-            pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng 2>/dev/null || true
+        echo "   Installing pillow from Termux packages (recommended - avoids build errors)..."
+        if pkg install -y python-pillow 2>/dev/null; then
+            echo "   ✅ Pillow installed from Termux package"
+        else
+            echo -e "${YELLOW}   ⚠️  Termux pillow package not available, trying pip with JPEG support...${NC}"
+            # Install JPEG development libraries (required for Pillow compilation)
+            echo "   Installing JPEG development libraries..."
+            pkg install -y libjpeg-turbo-dev 2>/dev/null || pkg install -y libjpeg-turbo 2>/dev/null || true
+            pkg install -y binutils make gcc python-dev zlib libpng 2>/dev/null || true
+            # Set environment variables for JPEG library location
+            export JPEG_ROOT=/data/data/com.termux/files/usr
+            export CPPFLAGS="-I$JPEG_ROOT/include"
+            export LDFLAGS="-L$JPEG_ROOT/lib"
             python3 -m pip install --user pillow || echo "   ⚠️  Pillow installation failed, but continuing..."
-        }
+        fi
         
         echo "   Installing numpy from Termux packages (recommended)..."
         pkg install -y python-numpy 2>/dev/null || {

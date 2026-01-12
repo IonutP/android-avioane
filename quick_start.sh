@@ -24,13 +24,20 @@ pkg install -y python python-pip
 
 # Install Python packages from Termux (pre-built, recommended)
 echo ""
-echo "📚 Installing Python packages from Termux (pre-built)..."
-pkg install -y python-pillow python-numpy 2>/dev/null || {
-    echo "⚠️  Some Termux packages failed, trying pip..."
-    # Only install build dependencies if we need to build from source
-    pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng 2>/dev/null || true
+echo "📚 Installing Python packages from Termux (pre-built - avoids build errors)..."
+if pkg install -y python-pillow python-numpy 2>/dev/null; then
+    echo "✅ Packages installed from Termux (no compilation needed)"
+else
+    echo "⚠️  Termux packages failed, trying pip with all dependencies..."
+    # Install JPEG development libraries (required for Pillow)
+    pkg install -y libjpeg-turbo-dev 2>/dev/null || pkg install -y libjpeg-turbo 2>/dev/null || true
+    pkg install -y binutils make gcc python-dev zlib libpng 2>/dev/null || true
+    # Set environment variables for JPEG library location
+    export JPEG_ROOT=/data/data/com.termux/files/usr
+    export CPPFLAGS="-I$JPEG_ROOT/include"
+    export LDFLAGS="-L$JPEG_ROOT/lib"
     python3 -m pip install --user pillow numpy || echo "⚠️  Some packages failed"
-}
+fi
 python3 -m pip install --user pytesseract || echo "⚠️  pytesseract had issues, continuing..."
 python3 -m pip install --user uiautomator2 || echo "⚠️  uiautomator2 had issues"
 
