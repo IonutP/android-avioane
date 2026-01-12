@@ -4,6 +4,18 @@
 echo "🐳 Building Android APK using Docker..."
 echo ""
 
+# Check if Docker is running
+if ! docker info > /dev/null 2>&1; then
+    echo "❌ Docker is not running or not accessible"
+    echo ""
+    echo "Please:"
+    echo "1. Make sure Docker Desktop is running"
+    echo "2. On macOS: Open Docker Desktop app"
+    echo "3. Wait for Docker to start (whale icon in menu bar)"
+    echo "4. Try again"
+    exit 1
+fi
+
 # Build Docker image
 echo "📦 Building Docker image..."
 docker build -t android-avioane-builder .
