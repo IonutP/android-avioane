@@ -80,17 +80,21 @@ echo ""
 # Build with verbose logging to see actual errors
 echo "Running: $BUILDozer_CMD android debug"
 echo ""
-echo "⚠️  Note: If build fails with 'long' error, run: ./fix_pyjnius.sh"
-echo "   Then continue the build"
-echo ""
 
-# Try building - if it fails, we'll patch and retry
+# Patch pyjnius before build starts
+echo "🔧 Pre-patching pyjnius files..."
+./fix_pyjnius.sh
+
+# Try building - if it fails with long error, patch and retry
 if ! $BUILDozer_CMD -v android debug 2>&1 | tee build.log; then
-    echo ""
-    echo "⚠️  Build failed. Attempting to fix pyjnius and retry..."
-    ./fix_pyjnius.sh
-    echo "Retrying build..."
-    $BUILDozer_CMD -v android debug 2>&1 | tee -a build.log
+    # Check if error is related to 'long' type
+    if grep -q "undeclared name not builtin: long" build.log || grep -q "isinstance(arg, long)" build.log; then
+        echo ""
+        echo "⚠️  Build failed with 'long' error. Patching pyjnius and retrying..."
+        ./fix_pyjnius.sh
+        echo "Retrying build..."
+        $BUILDozer_CMD -v android debug 2>&1 | tee -a build.log
+    fi
 fi
 
 # Also try package command if debug succeeded
