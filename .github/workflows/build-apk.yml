@@ -25,8 +25,8 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y \
           git zip unzip openjdk-11-jdk python3-pip autoconf libtool \
-          pkg-config zlib1g-dev libncurses6-dev libncursesw6-dev \
-          libtinfo6 cmake libffi-dev libssl-dev
+          pkg-config zlib1g-dev libncurses-dev libncursesw-dev \
+          cmake libffi-dev libssl-dev
     
     - name: Install buildozer
       run: |
