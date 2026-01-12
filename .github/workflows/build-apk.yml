@@ -28,9 +28,9 @@ jobs:
           pkg-config zlib1g-dev libncurses-dev \
           cmake libffi-dev libssl-dev
     
-    - name: Install buildozer
+    - name: Install buildozer and dependencies
       run: |
-        pip3 install buildozer
+        pip3 install buildozer cython
     
     - name: Build APK
       run: |
