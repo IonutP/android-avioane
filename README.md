@@ -11,6 +11,7 @@ Automated clicking script for Virtual Truck Manager 3 running directly on Androi
 # 2. Run:
 termux-setup-storage
 cd ~/storage/downloads
+# Note: Termux home is /data/data/com.termux/files/home
 pkg install -y wget
 wget -O download_and_setup.sh https://raw.githubusercontent.com/IonutP/android-avioane/main/download_and_setup.sh
 bash download_and_setup.sh https://raw.githubusercontent.com/IonutP/android-avioane/main
@@ -25,6 +26,8 @@ bash run.sh
    termux-setup-storage
    ```
 3. **Copy all files** to `~/storage/downloads`
+   - Note: Termux home directory is `/data/data/com.termux/files/home`
+   - After `termux-setup-storage`, `~/storage/downloads` links to your Downloads folder
 4. **Run:**
    ```bash
    cd ~/storage/downloads

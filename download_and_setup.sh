@@ -25,6 +25,8 @@ echo "╚═══════════════════════�
 echo ""
 
 # Create downloads directory
+# Note: Termux home is /data/data/com.termux/files/home
+# After termux-setup-storage, ~/storage/downloads links to Downloads folder
 mkdir -p ~/storage/downloads/automation
 cd ~/storage/downloads/automation
 

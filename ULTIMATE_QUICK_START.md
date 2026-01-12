@@ -5,6 +5,9 @@
 ### Step 1: Install Termux
 Download from [F-Droid](https://f-droid.org/packages/com.termux/)
 
+**Note:** Termux home directory is `/data/data/com.termux/files/home`
+After running `termux-setup-storage`, `~/storage/downloads` links to your Downloads folder.
+
 ### Step 2: Run This One Command
 ```bash
 termux-setup-storage && cd ~/storage/downloads && pkg install -y wget && wget -O download_and_setup.sh https://your-url.com/download_and_setup.sh && bash download_and_setup.sh https://your-url.com && bash run.sh
