@@ -12,8 +12,8 @@ Automated clicking script for Virtual Truck Manager 3 running directly on Androi
 termux-setup-storage
 cd ~/storage/downloads
 pkg install -y wget
-wget -O download_and_setup.sh https://raw.githubusercontent.com/yourusername/android-avioane/main/download_and_setup.sh
-bash download_and_setup.sh https://raw.githubusercontent.com/yourusername/android-avioane/main
+wget -O download_and_setup.sh https://raw.githubusercontent.com/ionutp/android-avioane/main/download_and_setup.sh
+bash download_and_setup.sh https://raw.githubusercontent.com/ionutp/android-avioane/main
 bash run.sh
 ```
 
@@ -123,7 +123,7 @@ To update files from GitHub:
 
 ```bash
 cd ~/storage/downloads/automation
-bash download_and_setup.sh https://raw.githubusercontent.com/yourusername/android-avioane/main
+bash download_and_setup.sh https://raw.githubusercontent.com/ionutp/android-avioane/main
 ```
 
 ## 📝 License
