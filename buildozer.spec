@@ -37,7 +37,7 @@ version = 0.1
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
 # Note: numpy and pytesseract can be problematic - may need to build without them first
-requirements = python3,kivy,plyer,pyjnius,android,pillow
+requirements = python3,kivy,plyer,pyjnius,android
 
 # (str) Custom source folders for requirements
 # requirements.source.kivy = ../../kivy
@@ -165,4 +165,5 @@ android.ndk = 25b
 #android.copy_libs = 1
 
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
+# Build only for arm64-v8a to avoid pyjnius compilation issues
 arch = arm64-v8a

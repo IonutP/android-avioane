@@ -78,7 +78,15 @@ echo "   This may take 10-30 minutes..."
 echo ""
 
 # Build with verbose logging to see actual errors
+echo "Running: $BUILDozer_CMD android debug"
 $BUILDozer_CMD -v android debug 2>&1 | tee build.log
+
+# Also try package command if debug succeeded
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "📦 Packaging APK..."
+    $BUILDozer_CMD android release 2>&1 | tee -a build.log || echo "Release build failed, using debug APK"
+fi
 
 if [ $? -eq 0 ]; then
     echo ""
