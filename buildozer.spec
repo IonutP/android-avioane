@@ -12,6 +12,9 @@ package.domain = com.gameautomation
 # (str) Source code where the main.py live
 source.dir = .
 
+# (str) Main entry point
+source.main = overlay_app.py
+
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,json
 
@@ -54,7 +57,7 @@ orientation = portrait
 fullscreen = 0
 
 # (list) Permissions
-android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,ACCESSIBILITY_SERVICE
+android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,ACCESSIBILITY_SERVICE,SYSTEM_ALERT_WINDOW
 
 # (int) Target Android API, should be as high as possible.
 android.api = 30
