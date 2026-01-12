@@ -182,6 +182,18 @@ python3 -m pip install --user pillow numpy
 
 **Note:** The updated scripts automatically try Termux packages first to avoid these build issues!
 
+**For uiautomator2/lxml build errors ("libxml2/libxslt not found"):**
+
+Install the required development packages:
+```bash
+pkg install -y libxml2-dev libxslt-dev
+# Or if dev packages aren't available:
+pkg install -y libxml2 libxslt
+
+# Then try installing uiautomator2 again
+python3 -m pip install --user uiautomator2
+```
+
 **For other package errors:**
 
 Check your internet connection:

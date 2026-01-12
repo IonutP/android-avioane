@@ -75,8 +75,12 @@ check_packages() {
         python3 -m pip install --user pytesseract || echo "   ⚠️  pytesseract installation had issues, continuing..."
         
         echo "   Installing uiautomator2..."
+        # Install libxml2 and libxslt dev packages (required for lxml, which uiautomator2 needs)
+        pkg install -y libxml2-dev libxslt-dev 2>/dev/null || pkg install -y libxml2 libxslt 2>/dev/null || true
         python3 -m pip install --user uiautomator2 || {
             echo -e "${RED}   ❌ uiautomator2 installation failed${NC}"
+            echo -e "${YELLOW}   Try installing libxml2 and libxslt dev packages manually:${NC}"
+            echo -e "${YELLOW}   pkg install -y libxml2-dev libxslt-dev${NC}"
             return 1
         }
         

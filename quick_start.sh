@@ -39,6 +39,10 @@ else
     python3 -m pip install --user pillow numpy || echo "⚠️  Some packages failed"
 fi
 python3 -m pip install --user pytesseract || echo "⚠️  pytesseract had issues, continuing..."
+
+# Install libxml2 and libxslt dev packages (required for lxml, which uiautomator2 needs)
+echo "   Installing libxml2/libxslt for uiautomator2..."
+pkg install -y libxml2-dev libxslt-dev 2>/dev/null || pkg install -y libxml2 libxslt 2>/dev/null || true
 python3 -m pip install --user uiautomator2 || echo "⚠️  uiautomator2 had issues"
 
 # Initialize uiautomator2
