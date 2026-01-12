@@ -4,35 +4,27 @@ Automated clicking script for Virtual Truck Manager 3 running directly on Androi
 
 ## 🚀 Quick Start
 
-### Option 1: Download Everything (Recommended)
+**👉 For a complete step-by-step guide, see [`FRESH_INSTALL.md`](FRESH_INSTALL.md)**
+
+### Fresh Install
 
 ```bash
 # 1. Install Termux from F-Droid
 # 2. Run:
 termux-setup-storage
+pkg update && pkg install -y wget
 cd ~/storage/downloads
-# Note: Termux home is /data/data/com.termux/files/home
-pkg install -y wget
 wget -O download_and_setup.sh https://raw.githubusercontent.com/IonutP/android-avioane/main/download_and_setup.sh
 bash download_and_setup.sh https://raw.githubusercontent.com/IonutP/android-avioane/main
-bash run.sh
 ```
 
-### Option 2: Manual Setup
-
-1. **Install Termux** from [F-Droid](https://f-droid.org/packages/com.termux/)
-2. **Grant storage permission:**
-   ```bash
-   termux-setup-storage
-   ```
-3. **Copy all files** to `~/storage/downloads`
-   - Note: Termux home directory is `/data/data/com.termux/files/home`
-   - After `termux-setup-storage`, `~/storage/downloads` links to your Downloads folder
-4. **Run:**
-   ```bash
-   cd ~/storage/downloads
-   bash run.sh
-   ```
+```bash
+termux-setup-storage
+pkg update && pkg install -y wget
+cd ~/storage/downloads
+wget -O download_and_setup.sh https://raw.githubusercontent.com/IonutP/android-avioane/main/download_and_setup.sh
+bash download_and_setup.sh https://raw.githubusercontent.com/IonutP/android-avioane/main
+```
 
 ## 📁 Project Structure
 
@@ -53,6 +45,7 @@ android-avioane/
 
 ## 📚 Documentation
 
+- **`FRESH_INSTALL.md`** ⭐ - **START HERE!** Complete fresh install guide
 - **`ULTIMATE_QUICK_START.md`** - One-command setup guide
 - **`SIMPLE_START.md`** - Simple step-by-step guide
 - **`START_HERE.md`** - Getting started overview
@@ -126,6 +119,7 @@ To update files from GitHub:
 
 ```bash
 cd ~/storage/downloads/automation
+wget -O download_and_setup.sh https://raw.githubusercontent.com/IonutP/android-avioane/main/download_and_setup.sh
 bash download_and_setup.sh https://raw.githubusercontent.com/IonutP/android-avioane/main
 ```
 
