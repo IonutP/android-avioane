@@ -36,7 +36,8 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,plyer,pyjnius,android,pillow,numpy,pytesseract
+# Note: numpy and pytesseract can be problematic - may need to build without them first
+requirements = python3,kivy,plyer,pyjnius,android,pillow
 
 # (str) Custom source folders for requirements
 # requirements.source.kivy = ../../kivy

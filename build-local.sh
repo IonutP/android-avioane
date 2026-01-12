@@ -77,7 +77,8 @@ echo "🚀 Starting build..."
 echo "   This may take 10-30 minutes..."
 echo ""
 
-$BUILDozer_CMD android debug
+# Build with verbose logging to see actual errors
+$BUILDozer_CMD -v android debug 2>&1 | tee build.log
 
 if [ $? -eq 0 ]; then
     echo ""

@@ -33,3 +33,9 @@ coordinates.json
 
 # Termux/Android specific
 .storage/
+
+# Buildozer build artifacts
+.buildozer/
+bin/
+*.apk
+*.aab
