@@ -159,21 +159,21 @@ python3 -m uiautomator2 init
 
 ### "Package installation failed" or "Failed to build numpy"
 
-**For numpy build errors:**
+**For numpy or pillow build errors:**
 
-1. Install build dependencies manually:
+1. Install all build dependencies manually:
 ```bash
-pkg install -y binutils make gcc python-dev
+pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng
 ```
 
-2. Try installing numpy again:
+2. Try installing packages again:
 ```bash
-python3 -m pip install --user numpy
+python3 -m pip install --user pillow numpy
 ```
 
-3. If that fails, try Termux package:
+3. If that fails, try Termux packages:
 ```bash
-pkg install -y python-numpy
+pkg install -y python-pillow python-numpy
 ```
 
 **For other package errors:**

@@ -22,16 +22,19 @@ echo ""
 echo "🐍 Installing Python..."
 pkg install -y python python-pip
 
-# Install build dependencies for numpy
+# Install build dependencies for numpy and pillow
 echo ""
 echo "🔧 Installing build dependencies..."
-pkg install -y binutils make gcc python-dev 2>/dev/null || true
+pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng 2>/dev/null || true
 
 # Install Python packages
 echo ""
 echo "📚 Installing Python packages..."
 # Install packages one by one
-python3 -m pip install --user pillow || echo "⚠️  Pillow had issues, continuing..."
+python3 -m pip install --user pillow || {
+    echo "⚠️  Pillow build failed, trying Termux package..."
+    pkg install -y python-pillow 2>/dev/null || echo "⚠️  Pillow installation failed"
+}
 python3 -m pip install --user numpy || {
     echo "⚠️  NumPy build failed, trying Termux package..."
     pkg install -y python-numpy 2>/dev/null || echo "⚠️  NumPy installation failed"

@@ -46,13 +46,16 @@ check_packages() {
         # Ensure python-pip is installed (Termux requirement)
         pkg install -y python-pip 2>/dev/null || true
         
-        # Install build dependencies for numpy
-        echo "   Installing build dependencies for numpy..."
-        pkg install -y binutils make gcc python-dev 2>/dev/null || true
+        # Install build dependencies for numpy and pillow
+        echo "   Installing build dependencies..."
+        pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng 2>/dev/null || true
         
         # Install packages one by one to handle errors better
         echo "   Installing pillow..."
-        python3 -m pip install --user pillow || echo "   ⚠️  Pillow installation had issues, continuing..."
+        python3 -m pip install --user pillow || {
+            echo -e "${YELLOW}   ⚠️  Pillow build failed, trying Termux package...${NC}"
+            pkg install -y python-pillow 2>/dev/null || echo "   ⚠️  Pillow installation failed, but continuing..."
+        }
         
         echo "   Installing numpy (this may take a while)..."
         python3 -m pip install --user numpy || {
