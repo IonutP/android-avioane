@@ -29,7 +29,18 @@ echo ""
 # Check for buildozer
 if ! command -v buildozer &> /dev/null; then
     echo "📦 Installing buildozer..."
-    pip3 install buildozer cython
+    pip3 install --user buildozer cython
+    # Add user bin to PATH
+    export PATH="$PATH:$HOME/Library/Python/3.9/bin"
+    # Try python3 -m buildozer if command still not found
+    if ! command -v buildozer &> /dev/null; then
+        echo "   Using python3 -m buildozer instead..."
+        BUILDozer_CMD="python3 -m buildozer"
+    else
+        BUILDozer_CMD="buildozer"
+    fi
+else
+    BUILDozer_CMD="buildozer"
 fi
 
 # Accept licenses if needed
@@ -66,7 +77,7 @@ echo "🚀 Starting build..."
 echo "   This may take 10-30 minutes..."
 echo ""
 
-buildozer android debug
+$BUILDozer_CMD android debug
 
 if [ $? -eq 0 ]; then
     echo ""
