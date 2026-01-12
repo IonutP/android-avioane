@@ -88,7 +88,11 @@ bash run.sh
 - **Important:** The script installs `python-pip` as a package (not upgrading pip directly, which breaks Termux)
 - **Note:** If numpy build fails, the script will try installing from Termux packages as fallback
 
-### 3. uiautomator2 Initialization
+### 3. ADB Installation
+- Installs `android-tools` package (contains ADB)
+- Required for uiautomator2 to work
+
+### 4. uiautomator2 Initialization
 - Runs `python3 -m uiautomator2 init`
 - **Important:** Grant all permissions when prompted:
   - Display over other apps
@@ -148,10 +152,16 @@ The script should install it automatically, but if it fails:
 pkg install -y python python-pip
 ```
 
-### "uiautomator2 not found"
+### "uiautomator2 not found" or "No adb exe could be found"
 
+Install ADB first:
 ```bash
-pip install uiautomator2
+pkg install -y android-tools
+```
+
+Then install uiautomator2:
+```bash
+python3 -m pip install --user uiautomator2
 python3 -m uiautomator2 init
 ```
 

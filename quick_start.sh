@@ -45,6 +45,11 @@ echo "   Installing libxml2/libxslt for uiautomator2..."
 pkg install -y libxml2-dev libxslt-dev 2>/dev/null || pkg install -y libxml2 libxslt 2>/dev/null || true
 python3 -m pip install --user uiautomator2 || echo "⚠️  uiautomator2 had issues"
 
+# Install ADB (required for uiautomator2)
+echo ""
+echo "🔧 Installing ADB (required for uiautomator2)..."
+pkg install -y android-tools 2>/dev/null || echo "⚠️  android-tools installation had issues"
+
 # Initialize uiautomator2
 echo ""
 echo "🔧 Initializing uiautomator2..."

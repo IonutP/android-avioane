@@ -49,6 +49,9 @@ if [ $? -ne 0 ]; then
     pkg install -y libxml2-dev libxslt-dev 2>/dev/null || pkg install -y libxml2 libxslt 2>/dev/null || true
     python3 -m pip install --user uiautomator2 || echo "⚠️  uiautomator2 had issues"
     echo ""
+    echo "Installing ADB (required for uiautomator2)..."
+    pkg install -y android-tools 2>/dev/null || echo "⚠️  android-tools installation had issues"
+    echo ""
     echo "Initializing uiautomator2 (one time setup)..."
     python3 -m uiautomator2 init
     echo ""

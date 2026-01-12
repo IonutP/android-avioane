@@ -4,8 +4,8 @@
 # Usage: bash download_and_setup.sh <base-url>
 # Example: bash download_and_setup.sh https://raw.githubusercontent.com/yourusername/repo/main
 
-# Default URL (change this to your actual URL)
-DEFAULT_URL="https://raw.githubusercontent.com/yourusername/repo/main"
+# Default URL
+DEFAULT_URL="https://raw.githubusercontent.com/IonutP/android-avioane/main"
 
 BASE_URL="${1:-$DEFAULT_URL}"
 
@@ -44,12 +44,16 @@ FILES=(
 )
 
 # Download each file
+DOWNLOADED=0
+FAILED=0
+
 for file in "${FILES[@]}"; do
     echo "📥 Downloading $file..."
     wget -q "$BASE_URL/$file" -O "$file"
     
-    if [ $? -eq 0 ]; then
+    if [ $? -eq 0 ] && [ -f "$file" ]; then
         echo "   ✅ Downloaded $file"
+        ((DOWNLOADED++))
         # Make scripts executable
         if [[ "$file" == *.sh ]]; then
             chmod +x "$file"
@@ -57,12 +61,23 @@ for file in "${FILES[@]}"; do
     else
         echo "   ❌ Failed to download $file"
         echo "   Make sure the URL is correct and file exists"
+        ((FAILED++))
     fi
 done
 
 echo ""
 echo "═══════════════════════════════════════════════════════"
-echo "✅ Files downloaded!"
+if [ $DOWNLOADED -gt 0 ]; then
+    echo "✅ Downloaded $DOWNLOADED file(s)"
+    if [ $FAILED -gt 0 ]; then
+        echo "⚠️  Failed to download $FAILED file(s)"
+    fi
+else
+    echo "❌ Failed to download files!"
+    echo "   Check the URL: $BASE_URL"
+    echo "   Make sure you're using the correct GitHub repository URL"
+    exit 1
+fi
 echo "═══════════════════════════════════════════════════════"
 echo ""
 echo "Current directory: $(pwd)"

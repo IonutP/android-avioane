@@ -91,6 +91,11 @@ check_packages() {
         
         echo -e "${GREEN}✅ Packages installed${NC}"
         echo ""
+        echo "🔧 Installing ADB (required for uiautomator2)..."
+        pkg install -y android-tools 2>/dev/null || {
+            echo -e "${YELLOW}   ⚠️  android-tools installation failed, but continuing...${NC}"
+        }
+        echo ""
         echo "🔧 Initializing uiautomator2 (one time)..."
         echo "   ⚠️  Grant permissions when prompted!"
         python3 -m uiautomator2 init
