@@ -1,0 +1,35 @@
+# Screenshots folder
+screenshots/
+automation_screenshots/
+
+# Configuration (user-specific)
+automation_config.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+log.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.png
+*.jpg
+*.jpeg
+coordinates.json
+
+# Termux/Android specific
+.storage/
