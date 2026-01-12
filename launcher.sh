@@ -28,18 +28,12 @@ python3 -c "import uiautomator2" 2>/dev/null
 if [ $? -ne 0 ]; then
     echo "⚠️  uiautomator2 not found!"
     echo ""
-    echo "Installing build dependencies..."
-    pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng 2>/dev/null || true
-    echo ""
-    echo "Installing required packages..."
-    # Install packages one by one
-    python3 -m pip install --user pillow || {
-        echo "⚠️  Pillow build failed, trying Termux package..."
-        pkg install -y python-pillow 2>/dev/null || echo "⚠️  Pillow failed"
-    }
-    python3 -m pip install --user numpy || {
-        echo "⚠️  NumPy build failed, trying Termux package..."
-        pkg install -y python-numpy 2>/dev/null || echo "⚠️  NumPy failed"
+    echo "Installing required packages from Termux (pre-built)..."
+    # Try Termux packages first (no compilation needed)
+    pkg install -y python-pillow python-numpy 2>/dev/null || {
+        echo "⚠️  Termux packages failed, trying pip with build dependencies..."
+        pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng 2>/dev/null || true
+        python3 -m pip install --user pillow numpy || echo "⚠️  Build failed"
     }
     python3 -m pip install --user pytesseract || echo "⚠️  pytesseract had issues"
     python3 -m pip install --user uiautomator2 || echo "⚠️  uiautomator2 had issues"

@@ -46,22 +46,21 @@ check_packages() {
         # Ensure python-pip is installed (Termux requirement)
         pkg install -y python-pip 2>/dev/null || true
         
-        # Install build dependencies for numpy and pillow
-        echo "   Installing build dependencies..."
-        pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng 2>/dev/null || true
-        
-        # Install packages one by one to handle errors better
-        echo "   Installing pillow..."
-        python3 -m pip install --user pillow || {
-            echo -e "${YELLOW}   ⚠️  Pillow build failed, trying Termux package...${NC}"
-            pkg install -y python-pillow 2>/dev/null || echo "   ⚠️  Pillow installation failed, but continuing..."
+        # Try Termux packages first (pre-built, no compilation needed)
+        echo "   Installing pillow from Termux packages (recommended)..."
+        pkg install -y python-pillow 2>/dev/null || {
+            echo -e "${YELLOW}   ⚠️  Termux pillow package not available, trying pip...${NC}"
+            # Install build dependencies if we need to build from source
+            pkg install -y binutils make gcc python-dev libjpeg-turbo zlib libpng 2>/dev/null || true
+            python3 -m pip install --user pillow || echo "   ⚠️  Pillow installation failed, but continuing..."
         }
         
-        echo "   Installing numpy (this may take a while)..."
-        python3 -m pip install --user numpy || {
-            echo -e "${YELLOW}   ⚠️  NumPy build failed, trying alternative method...${NC}"
-            # Try installing from Termux packages if available
-            pkg install -y python-numpy 2>/dev/null || echo "   ⚠️  NumPy installation failed, but continuing..."
+        echo "   Installing numpy from Termux packages (recommended)..."
+        pkg install -y python-numpy 2>/dev/null || {
+            echo -e "${YELLOW}   ⚠️  Termux numpy package not available, trying pip...${NC}"
+            # Install build dependencies if we need to build from source
+            pkg install -y binutils make gcc python-dev 2>/dev/null || true
+            python3 -m pip install --user numpy || echo "   ⚠️  NumPy installation failed, but continuing..."
         }
         
         echo "   Installing pytesseract..."
