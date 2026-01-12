@@ -73,10 +73,13 @@ android-avioane/
 
 The script automatically installs:
 - Python 3
+- python-pip (Termux package - required!)
 - uiautomator2
 - Pillow (PIL)
 - NumPy
 - pytesseract or easyocr
+
+**Note for Termux:** Don't run `pip install --upgrade pip` - it will break the python-pip package. The scripts handle this correctly.
 
 ## 🎮 Usage
 

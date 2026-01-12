@@ -43,7 +43,8 @@ check_packages() {
     if [ $? -ne 0 ]; then
         echo -e "${YELLOW}⚠️  Missing packages - installing...${NC}"
         echo "   This may take 10-20 minutes..."
-        pip install --upgrade pip
+        # Ensure python-pip is installed (Termux requirement)
+        pkg install -y python-pip 2>/dev/null || true
         pip install pillow numpy pytesseract uiautomator2
         
         if [ $? -ne 0 ]; then

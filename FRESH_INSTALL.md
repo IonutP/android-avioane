@@ -81,9 +81,10 @@ bash run.sh
 - Takes ~1-2 minutes
 
 ### 2. Package Installation
-- Installs: `uiautomator2`, `pillow`, `numpy`, `pytesseract`
+- Installs: `python-pip` (Termux package), then `uiautomator2`, `pillow`, `numpy`, `pytesseract`
 - Takes ~10-20 minutes (depends on internet speed)
 - **Be patient!** This is the longest step.
+- **Important:** The script installs `python-pip` as a package (not upgrading pip directly, which breaks Termux)
 
 ### 3. uiautomator2 Initialization
 - Runs `python3 -m uiautomator2 init`
@@ -162,12 +163,14 @@ Check your internet connection:
 ping -c 3 google.com
 ```
 
-If internet works, try:
+If internet works, make sure python-pip is installed:
 
 ```bash
-pip install --upgrade pip
+pkg install -y python-pip
 pip install pillow numpy pytesseract uiautomator2
 ```
+
+**Important:** Don't run `pip install --upgrade pip` in Termux - it will break the python-pip package!
 
 ### Setup wizard doesn't work
 

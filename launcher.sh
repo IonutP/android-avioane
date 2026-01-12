@@ -13,7 +13,13 @@ if ! command -v python3 &> /dev/null; then
     echo "❌ Python not found!"
     echo ""
     echo "Installing Python..."
-    pkg install -y python
+    pkg install -y python python-pip
+fi
+
+# Check if pip is available
+if ! command -v pip &> /dev/null; then
+    echo "⚠️  pip not found - installing python-pip..."
+    pkg install -y python-pip
 fi
 
 # Check if required packages are installed
@@ -23,6 +29,7 @@ if [ $? -ne 0 ]; then
     echo "⚠️  uiautomator2 not found!"
     echo ""
     echo "Installing required packages..."
+    # Note: Don't upgrade pip in Termux - it breaks the python-pip package
     pip install uiautomator2 pillow numpy pytesseract
     echo ""
     echo "Initializing uiautomator2 (one time setup)..."
