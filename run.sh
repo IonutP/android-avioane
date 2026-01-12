@@ -45,8 +45,30 @@ check_packages() {
         echo "   This may take 10-20 minutes..."
         # Ensure python-pip is installed (Termux requirement)
         pkg install -y python-pip 2>/dev/null || true
-        # Use python3 -m pip to avoid pip trying to upgrade itself
-        python3 -m pip install --user pillow numpy pytesseract uiautomator2
+        
+        # Install build dependencies for numpy
+        echo "   Installing build dependencies for numpy..."
+        pkg install -y binutils make gcc python-dev 2>/dev/null || true
+        
+        # Install packages one by one to handle errors better
+        echo "   Installing pillow..."
+        python3 -m pip install --user pillow || echo "   ⚠️  Pillow installation had issues, continuing..."
+        
+        echo "   Installing numpy (this may take a while)..."
+        python3 -m pip install --user numpy || {
+            echo -e "${YELLOW}   ⚠️  NumPy build failed, trying alternative method...${NC}"
+            # Try installing from Termux packages if available
+            pkg install -y python-numpy 2>/dev/null || echo "   ⚠️  NumPy installation failed, but continuing..."
+        }
+        
+        echo "   Installing pytesseract..."
+        python3 -m pip install --user pytesseract || echo "   ⚠️  pytesseract installation had issues, continuing..."
+        
+        echo "   Installing uiautomator2..."
+        python3 -m pip install --user uiautomator2 || {
+            echo -e "${RED}   ❌ uiautomator2 installation failed${NC}"
+            return 1
+        }
         
         if [ $? -ne 0 ]; then
             echo -e "${RED}❌ Package installation failed${NC}"

@@ -28,9 +28,18 @@ python3 -c "import uiautomator2" 2>/dev/null
 if [ $? -ne 0 ]; then
     echo "⚠️  uiautomator2 not found!"
     echo ""
+    echo "Installing build dependencies..."
+    pkg install -y binutils make gcc python-dev 2>/dev/null || true
+    echo ""
     echo "Installing required packages..."
-    # Use python3 -m pip to avoid pip trying to upgrade itself
-    python3 -m pip install --user uiautomator2 pillow numpy pytesseract
+    # Install packages one by one
+    python3 -m pip install --user pillow || echo "⚠️  Pillow had issues"
+    python3 -m pip install --user numpy || {
+        echo "⚠️  NumPy build failed, trying Termux package..."
+        pkg install -y python-numpy 2>/dev/null || echo "⚠️  NumPy failed"
+    }
+    python3 -m pip install --user pytesseract || echo "⚠️  pytesseract had issues"
+    python3 -m pip install --user uiautomator2 || echo "⚠️  uiautomator2 had issues"
     echo ""
     echo "Initializing uiautomator2 (one time setup)..."
     python3 -m uiautomator2 init

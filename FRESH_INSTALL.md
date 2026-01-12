@@ -82,9 +82,11 @@ bash run.sh
 
 ### 2. Package Installation
 - Installs: `python-pip` (Termux package), then `uiautomator2`, `pillow`, `numpy`, `pytesseract`
+- Installs build dependencies (gcc, make, etc.) needed for numpy
 - Takes ~10-20 minutes (depends on internet speed)
 - **Be patient!** This is the longest step.
 - **Important:** The script installs `python-pip` as a package (not upgrading pip directly, which breaks Termux)
+- **Note:** If numpy build fails, the script will try installing from Termux packages as fallback
 
 ### 3. uiautomator2 Initialization
 - Runs `python3 -m uiautomator2 init`
@@ -155,19 +157,36 @@ python3 -m uiautomator2 init
 
 **Important:** Grant all permissions when prompted!
 
-### "Package installation failed"
+### "Package installation failed" or "Failed to build numpy"
+
+**For numpy build errors:**
+
+1. Install build dependencies manually:
+```bash
+pkg install -y binutils make gcc python-dev
+```
+
+2. Try installing numpy again:
+```bash
+python3 -m pip install --user numpy
+```
+
+3. If that fails, try Termux package:
+```bash
+pkg install -y python-numpy
+```
+
+**For other package errors:**
 
 Check your internet connection:
-
 ```bash
 ping -c 3 google.com
 ```
 
-If internet works, make sure python-pip is installed:
-
+Make sure python-pip is installed:
 ```bash
 pkg install -y python-pip
-pip install pillow numpy pytesseract uiautomator2
+python3 -m pip install --user pillow pytesseract uiautomator2
 ```
 
 **Important:** Don't run `pip install --upgrade pip` in Termux - it will break the python-pip package!

@@ -22,11 +22,22 @@ echo ""
 echo "🐍 Installing Python..."
 pkg install -y python python-pip
 
+# Install build dependencies for numpy
+echo ""
+echo "🔧 Installing build dependencies..."
+pkg install -y binutils make gcc python-dev 2>/dev/null || true
+
 # Install Python packages
 echo ""
 echo "📚 Installing Python packages..."
-# Use python3 -m pip to avoid pip trying to upgrade itself
-python3 -m pip install --user pillow numpy pytesseract uiautomator2
+# Install packages one by one
+python3 -m pip install --user pillow || echo "⚠️  Pillow had issues, continuing..."
+python3 -m pip install --user numpy || {
+    echo "⚠️  NumPy build failed, trying Termux package..."
+    pkg install -y python-numpy 2>/dev/null || echo "⚠️  NumPy installation failed"
+}
+python3 -m pip install --user pytesseract || echo "⚠️  pytesseract had issues, continuing..."
+python3 -m pip install --user uiautomator2 || echo "⚠️  uiautomator2 had issues"
 
 # Initialize uiautomator2
 echo ""
